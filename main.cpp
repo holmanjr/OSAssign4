@@ -118,7 +118,7 @@ void runExecutable(std::string args, std::vector<std::string> &hist, double runT
 		for (auto &comp : components) {
 			if (comp == "|") {
 				left = false;
-				break;
+				continue;
 			}
 			if (left) {
 				leftSide.push_back(comp);
