@@ -35,7 +35,7 @@ int main() {
 	std::vector<std::string> hist;//Vector used to hold command history
 							  
 	while (true) {//Loop to run the command line
-		std::cout << "[cmd]: ";
+		std::cout << "[" << (char *)get_current_dir_name() << ":] ";
 		std::getline(std::cin, input);
 		hist.push_back(input);
 
@@ -231,5 +231,5 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 }
 
 void interuptionHandler(int signalId) {
-	std::cout << "Not today" << std::endl;
+	std::cout << std::endl << "[" << (char *)get_current_dir_name() << ":] ";
 }
