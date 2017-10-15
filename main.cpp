@@ -28,6 +28,8 @@ const int STDIN = 0;
 const int STDOUT = 1;
 
 int main() {
+	signal(SIGINT, std::cout << "what";);
+
 	std::string input;//Input from user
 	double runTime = 0.0;//Total run time of processes
 	std::vector<std::string> hist;//Vector used to hold command history
@@ -36,8 +38,6 @@ int main() {
 		std::cout << "[" << (char *)get_current_dir_name() << ":] ";
 		std::getline(std::cin, input);
 		hist.push_back(input);
-
-		signal(SIGINT, interuptionHandler);
 
 		std::stringstream ss;
 		std::string component;
