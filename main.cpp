@@ -251,5 +251,5 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 }
 
 void interuptionHandler(int signalId) {
-	std::cout << "\n[" << (char *)get_current_dir_name() << ":] ";
+	continue;
 }
