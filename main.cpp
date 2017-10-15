@@ -29,12 +29,6 @@ int main() {
 	std::string input;//Input from user
 	double runTime = 0.0;//Total run time of processes
 	std::vector<std::string> hist;//Vector used to hold command history
-
-	int pids[PIPE_COUNT];
-	pipe(pids);
-
-	int savedStdout = dup(STDOUT);
-	int savedStdin = dup(STDIN);
 							  
 	while (true) {//Loop to run the command line
 		std::cout << "[cmd]: ";
@@ -165,7 +159,54 @@ void history(std::vector<std::string> &hist) {
 }
 
 void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
-	std::cout << "Pipe function:" << std::endl;
-	std::cout << "Left side: " << lSide[0] << std::endl;
-	std::cout << "Right side: " << rSide[0] << std::endl;
+	int status;
+
+	int pids[PIPE_COUNT];
+	pipe(pids);
+
+	int savedStdout = dup(STDOUT);
+	int savedStdin = dup(STDIN);
+
+	auto pid = fork();
+	if (pid == 0) {
+		char** argv;
+		argv = new char*[lSide.size()];
+
+		//Unload arguments from vector into correct data types
+		for (int i = 0; i < lSide.size(); i++) {
+			argv[i] = new char[lSide[i].size() + 1];
+			strcpy(argv[i], lSide[i].c_str());
+		}
+		argv[n] = NULL;
+
+		//Run execution inside if statement
+		if (execvp(argv[0], argv) < 0) {//Execution failed
+			std::cout << "ERROR: exec failed" << std::endl;
+			exit(1);
+		}
+	}
+	else {
+		wait(&status);
+
+		if (!status) {
+			char** argv;
+			argv = new char*[rSide.size()];
+
+			//Unload arguments from vector into correct data types
+			for (int i = 0; i < rSide.size(); i++) {
+				argv[i] = new char[rSide[i].size() + 1];
+				strcpy(argv[i], rSide[i].c_str());
+			}
+			argv[n] = NULL;
+
+			//Run execution inside if statement
+			if (execvp(argv[0], argv) < 0) {//Execution failed
+				std::cout << "ERROR: exec failed" << std::endl;
+				exit(1);
+			}
+		}
+		else {
+			exit(1);
+		}
+	}
 }
