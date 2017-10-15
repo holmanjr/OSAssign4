@@ -7,11 +7,20 @@
 #include <sstream>
 #include <vector>
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 double timeExecutable(std::string, std::vector<std::string> &, double);
 void runExecutable(std::string, std::vector<std::string> &, double);
 void ptime(double);
 void history(std::vector<std::string> &);
+
+const int PIPE_COUNT = 2;
+const int PIPE_READ_END = 0;
+const int PIPE_WRITE_END = 1;
+
+const int STDIN = 0;
+const int STDOUT = 1;
 
 int main() {
 
@@ -19,8 +28,14 @@ int main() {
 	double runTime = 0.0;//Total run time of processes
 	std::vector<std::string> hist;//Vector used to hold command history
 
-								  //Loop to run the command line
-	while (true) {
+	int pids[PIPE_COUNT];
+	pipe(pids);
+
+	int savedStdout = dup(STDOUT);
+	int savedStdin = dup(STDIN);
+
+								  
+	while (true) {//Loop to run the command line
 		std::cout << "[cmd]: ";
 		std::getline(std::cin, input);
 		hist.push_back(input);
@@ -54,6 +69,7 @@ double timeExecutable(std::string args, std::vector<std::string> &hist, double r
 	else {//Parent process
 		wait(&status);
 		if (status != 0) {//Execution failed
+			std::cout << "Invalid command" << std::endl;
 			hist.pop_back();//Removes failed command from history
 			return 0.0;//Does not time failed execution
 		}
