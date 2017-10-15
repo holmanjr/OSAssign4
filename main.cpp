@@ -52,13 +52,16 @@ int main() {
 		int status;
 
 		if (input == "exit") break;
+		else if (components.size() == 0) {
+			continue;
+		}
 		else if (input == "ptime") {
 			ptime(runTime);
 		}
 		else if (input == "history") {
 			history(hist);
 		}
-		else if (components[0] == "cd") {
+		else if (components[0] == "cd") {//changes directory
 			int ret;
 			char *directory = new char[components[1].size()];
 			strcpy(directory, components[1].c_str());
@@ -248,5 +251,5 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 }
 
 void interuptionHandler(int signalId) {
-	std::cout << std::endl << "[" << (char *)get_current_dir_name() << ":] ";
+	std::cout << "/n[" << (char *)get_current_dir_name() << ":] ";
 }
