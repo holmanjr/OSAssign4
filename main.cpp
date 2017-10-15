@@ -28,7 +28,7 @@ const int STDIN = 0;
 const int STDOUT = 1;
 
 int main() {
-	signal(SIGINT, interuptionHandler);
+	//signal(SIGINT, interuptionHandler);
 
 	std::string input;//Input from user
 	double runTime = 0.0;//Total run time of processes
