@@ -110,7 +110,8 @@ void runExecutable(std::string args, std::vector<std::string> &hist, double runT
 
 	else if (components[0] == "cd") {
 		int ret;
-		char *directory = (char *)components[1];
+		char *directory = new char[components[1].size()];
+		strcpy(directory, components[1].c_str());
 
 		ret = chdir(directory);
 	}
