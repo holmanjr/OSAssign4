@@ -39,6 +39,16 @@ int main() {
 		std::getline(std::cin, input);
 		hist.push_back(input);
 
+		std::stringstream ss;
+		std::string component;
+		ss.str(input);
+		std::vector<std::string> components;
+
+		//Create vector with individual arguments
+		while (std::getline(ss, component, ' ')) {
+			components.push_back(component);
+		}
+
 		int status;
 
 		if (input == "exit") break;
@@ -47,6 +57,13 @@ int main() {
 		}
 		else if (input == "history") {
 			history(hist);
+		}
+		else if (components[0] == "cd") {
+			int ret;
+			char *directory = new char[components[1].size()];
+			strcpy(directory, components[1].c_str());
+
+			ret = chdir(directory);
 		}
 		else {//Not a built in function, adds execution time
 			runTime += timeExecutable(input, hist, runTime);
@@ -106,14 +123,6 @@ void runExecutable(std::string args, std::vector<std::string> &hist, double runT
 		}
 		else runExecutable(hist[std::stoi(components[1]) - 1], hist, runTime);
 		return;
-	}
-
-	else if (components[0] == "cd") {
-		int ret;
-		char *directory = new char[components[1].size()];
-		strcpy(directory, components[1].c_str());
-
-		ret = chdir(directory);
 	}
 
 	//User wants to pipe
