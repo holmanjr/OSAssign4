@@ -10,12 +10,15 @@
 #include <cstdio>
 #include <cstdlib>
 #include <algorithm>
+#include <functional>
+#include <signal.h>
 
 double timeExecutable(std::string, std::vector<std::string> &, double);
 void runExecutable(std::string, std::vector<std::string> &, double);
 void ptime(double);
 void history(std::vector<std::string> &);
 void pipeFunc(std::vector<std::string>, std::vector<std::string>);
+void interuptionHandler(int);
 
 const int PIPE_COUNT = 2;
 const int PIPE_READ_END = 0;
@@ -25,6 +28,7 @@ const int STDIN = 0;
 const int STDOUT = 1;
 
 int main() {
+	signal(SIGINT, interuptionHandler);
 
 	std::string input;//Input from user
 	double runTime = 0.0;//Total run time of processes
@@ -224,4 +228,8 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 
 	dup2(savedStdout, STDOUT);
 	dup2(savedStdin, STDIN);
+}
+
+void interuptionHandler(int signalId) {
+	std::cout << "Not today" << std::endl;
 }
