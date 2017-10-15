@@ -28,7 +28,7 @@ const int STDIN = 0;
 const int STDOUT = 1;
 
 int main() {
-	//signal(SIGINT, interuptionHandler);
+	signal(SIGINT, interuptionHandler);
 
 	std::string input;//Input from user
 	double runTime = 0.0;//Total run time of processes
@@ -250,4 +250,4 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 	dup2(savedStdin, STDIN);
 }
 
-void interuptionHandler(int signalId) {}
+void interuptionHandler(int signalId) { std::cout << "J"; }
