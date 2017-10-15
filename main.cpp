@@ -28,7 +28,7 @@ const int STDIN = 0;
 const int STDOUT = 1;
 
 int main() {
-	signal(SIGINT, std::cout << "what";);
+	signal(SIGINT, interuptionHandler);
 
 	std::string input;//Input from user
 	double runTime = 0.0;//Total run time of processes
@@ -52,9 +52,9 @@ int main() {
 		int status;
 
 		if (input == "exit") break;
-		//else if (components.size() == 0) {
-		//	continue;
-		//}
+		else if (components.size() == 0) {
+			continue;
+		}
 		else if (input == "ptime") {
 			ptime(runTime);
 		}
