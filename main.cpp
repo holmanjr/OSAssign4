@@ -52,9 +52,9 @@ int main() {
 		int status;
 
 		if (input == "exit") break;
-		else if (components.size() == 0) {
-			continue;
-		}
+		//else if (components.size() == 0) {
+		//	continue;
+		//}
 		else if (input == "ptime") {
 			ptime(runTime);
 		}
