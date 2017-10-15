@@ -214,7 +214,7 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 			close(pids[PIPE_WRITE_END]);
 			close(pids[PIPE_READ_END]);
 
-			dup2(savedStdout, STDOOUT);
+			dup2(savedStdout, STDOUT);
 			dup2(savedStdin, STDIN);
 			exit(1);
 		}
@@ -222,6 +222,6 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 	close(pids[PIPE_WRITE_END]);
 	close(pids[PIPE_READ_END]);
 
-	dup2(savedStdout, STDOOUT);
+	dup2(savedStdout, STDOUT);
 	dup2(savedStdin, STDIN);
 }
