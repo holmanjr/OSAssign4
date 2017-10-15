@@ -250,6 +250,4 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 	dup2(savedStdin, STDIN);
 }
 
-void interuptionHandler(int signalId) {
-	std::cout << "working";
-}
+void interuptionHandler(int signalId) {}
