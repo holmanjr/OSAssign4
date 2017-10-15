@@ -9,6 +9,7 @@
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <algorithm>
 
 double timeExecutable(std::string, std::vector<std::string> &, double);
 void runExecutable(std::string, std::vector<std::string> &, double);
@@ -33,8 +34,7 @@ int main() {
 
 	int savedStdout = dup(STDOUT);
 	int savedStdin = dup(STDIN);
-
-								  
+							  
 	while (true) {//Loop to run the command line
 		std::cout << "[cmd]: ";
 		std::getline(std::cin, input);
@@ -107,6 +107,10 @@ void runExecutable(std::string args, std::vector<std::string> &hist, double runT
 		}
 		else runExecutable(hist[std::stoi(components[1]) - 1], hist, runTime);
 		return;
+	}
+
+	if (std::find(components.begin(), components.end(), "|") != components.end()) {
+		std::cout << "Were in the pipe section" << std::endl;
 	}
 
 	char** argv;
