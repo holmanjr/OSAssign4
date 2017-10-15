@@ -177,7 +177,7 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 			argv[i] = new char[lSide[i].size() + 1];
 			strcpy(argv[i], lSide[i].c_str());
 		}
-		argv[n] = NULL;
+		argv[lSide.size()] = NULL;
 
 		//Run execution inside if statement
 		if (execvp(argv[0], argv) < 0) {//Execution failed
@@ -197,7 +197,7 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 				argv[i] = new char[rSide[i].size() + 1];
 				strcpy(argv[i], rSide[i].c_str());
 			}
-			argv[n] = NULL;
+			argv[rSide.size()] = NULL;
 
 			//Run execution inside if statement
 			if (execvp(argv[0], argv) < 0) {//Execution failed
