@@ -108,6 +108,13 @@ void runExecutable(std::string args, std::vector<std::string> &hist, double runT
 		return;
 	}
 
+	else if (components[0] == "cd") {
+		int ret;
+		char *directory = components[1];
+
+		ret = chdir(directory);
+	}
+
 	//User wants to pipe
 	if (std::find(components.begin(), components.end(), "|") != components.end()) {
 		auto left = true;
