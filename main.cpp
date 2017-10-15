@@ -169,6 +169,8 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 
 	auto pid = fork();
 	if (pid == 0) {
+		dup2(pids[PIPE_WRITE_END], STDOUT);
+
 		char** argv;
 		argv = new char*[lSide.size()];
 
@@ -188,6 +190,9 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 	else {
 		wait(&status);
 
+		dup2(pids[PIPE_READ_END], STDIN);
+		close(pids[PIPE_WRITE_END]);
+
 		if (!status) {
 			char** argv;
 			argv = new char*[rSide.size()];
@@ -206,7 +211,17 @@ void pipeFunc(std::vector<std::string> lSide, std::vector<std::string> rSide) {
 			}
 		}
 		else {
+			close(pids[PIPE_WRITE_END]);
+			close(pids[PIPE_READ_END]);
+
+			dup2(savedStdout, STDOOUT);
+			dup2(savedStdin, STDIN);
 			exit(1);
 		}
 	}
+	close(pids[PIPE_WRITE_END]);
+	close(pids[PIPE_READ_END]);
+
+	dup2(savedStdout, STDOOUT);
+	dup2(savedStdin, STDIN);
 }
